@@ -7,8 +7,8 @@ function App() {
 		<>
 			<Header />
 			<Background>
-        <UsersContainer />
-        </Background>
+				<UsersContainer />
+			</Background>
 		</>
 	);
 }

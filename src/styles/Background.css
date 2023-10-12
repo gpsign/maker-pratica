@@ -3,10 +3,6 @@
 	height: 100vh;
 	margin-top: 50px;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
 	background-image: url("../assets/background.png");
 	background-size: cover;
 }
