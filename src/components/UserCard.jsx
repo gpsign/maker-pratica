@@ -5,9 +5,9 @@ export default function UserCard({ dados }) {
 	if (!dados) return;
 
 	const { nome, dh_registro, avatar, i } = dados;
-	const data = new Date(dh_registro)
-		.toLocaleString([], { hour12: false })
-		.replace(",", " ");
+	const rawDate = new Date(dh_registro);
+
+	const date = rawDate.toLocaleString("pt-BR", { hour12: false }).replace(",", "");
 
 	return (
 		<li
@@ -24,7 +24,7 @@ export default function UserCard({ dados }) {
 				<h2 className='name'>{nome}</h2>
 			</div>
 			<div className='date container flex center'>
-				<h3 className='date'>{data}</h3>
+				<h3 className='date'>{date}</h3>
 			</div>
 			<p className='edit'>Editar</p>
 		</li>

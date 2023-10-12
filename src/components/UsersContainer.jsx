@@ -6,8 +6,29 @@ import { useEffect, useState } from "react";
 import UserCard from "./UserCard.jsx";
 
 function nextOrder(order) {
-	if (order === "ascending") return "descending";
-	else return "ascending";
+	switch (order) {
+		case "any":
+			return "ascending";
+		case "ascending":
+			return "descending";
+		default:
+			return "any";
+	}
+}
+
+function searchUser(array, value) {
+	return array.filter((user) => {
+		const aux = user.nome.split(" ");
+		const nome = aux[0].toLowerCase();
+		const sobrenome = aux[1].toLowerCase();
+		const nomeCompleto = nome + " " + sobrenome;
+
+		return (
+			nome.startsWith(value.toLowerCase()) ||
+			sobrenome.startsWith(value.toLowerCase()) ||
+			nomeCompleto.startsWith(value.toLowerCase())
+		);
+	});
 }
 
 var searchTimeout = null;
@@ -324,9 +345,29 @@ export function UsersContainer() {
 		},
 	];
 
-	const [searchValue, setSearchValue] = useState("");
-	const [searchResult, setSearchResult] = useState([]);
-	const [searching, setSearching] = useState(false);
+	const [search, setSearch] = useState({ status: false, result: [] });
+	const [dateOrder, setDateOrder] = useState("any");
+	const [nameOrder, setNameOrder] = useState("any");
+	const [usersDisplayed, setUsersDisplayed] = useState([...usersArray]);
+	const [selectedColumn, setSelectedColumn] = useState("");
+
+	function sortUsers(array, nameOrder, dateOrder) {
+		if (nameOrder != "any") {
+			const sortedByName = array.sort((userA, userB) => {
+				if (userA.nome < userB.nome) return -1;
+				if (userA.nome > userB.nome) return 1;
+			});
+			if (nameOrder === "ascending") return sortedByName;
+			else return sortedByName.reverse();
+		} else if (dateOrder != "any") {
+			const sortedByDate = array.sort(
+				(userA, userB) =>
+					new Date(userB.dh_registro) - new Date(userA.dh_registro)
+			);
+			if (dateOrder === "ascending") return sortedByDate;
+			else return sortedByDate.reverse();
+		} else return array;
+	}
 
 	return (
 		<div className='containerBox'>
@@ -334,33 +375,35 @@ export function UsersContainer() {
 				<label>
 					Pesquisar:{" "}
 					<input
-					placeholder="Nome"
+						placeholder='Nome ou Sobrenome'
 						onChange={(e) => {
-							const { value } = e.target;
+							const value = e.target.value.trim();
 							clearTimeout(searchTimeout);
-							setSearchValue(value);
 
 							searchTimeout = setTimeout(() => {
 								if (value.length > 0) {
-									setSearching(true);
-									const filtered = usersArray.filter((user) => {
-										const aux = user.nome.split(" ");
-										const nome = aux[0];
-										const sobrenome = aux[1];
+									setSearch({ ...search, status: true });
+									const filtered = searchUser(usersArray, value);
 
-										return (
-											nome.startsWith(value) || sobrenome.startsWith(value)
-										);
-									});
-									setSearchResult(filtered);
-								} else setSearching(false);
+									const sorted = sortUsers([...filtered], nameOrder, dateOrder);
+									setUsersDisplayed([...sorted]);
+									setSearch({ status: true, result: [...sorted] });
+								} else {
+									const sorted = sortUsers(
+										[...usersArray],
+										nameOrder,
+										dateOrder
+									);
+									setUsersDisplayed(sorted);
+									setSearch({ status: false, result: [] });
+								}
 							}, 300);
 						}}
 					/>
 				</label>
 				<p>
 					{`Mostrando ${
-						searching ? searchResult.length : usersArray.length
+						search.status ? search.result.length : usersDisplayed.length
 					} usuários`}
 				</p>
 			</div>
@@ -368,59 +411,99 @@ export function UsersContainer() {
 				<div className='check column flex center'>
 					<div className='checkButton' />
 				</div>
-				<div className='name column flex start'>
+				<button
+					className='name column flex start'
+					style={{
+						backgroundColor: selectedColumn === "name" ? "#f3f3f3" : "white",
+					}}
+					onClick={() => {
+						const next = nextOrder(nameOrder);
+						setNameOrder(next);
+						setDateOrder("any");
+
+						if (next != "any") {
+							setSelectedColumn("name");
+
+							if (search.status)
+								setUsersDisplayed(sortUsers([...search.result], next, "any"));
+							else
+								setUsersDisplayed(sortUsers([...usersDisplayed], next, "any"));
+						} else {
+							setSelectedColumn("");
+							if (search.status) setUsersDisplayed([...search.result]);
+							else setUsersDisplayed([...usersArray]);
+						}
+					}}
+				>
 					<BiSolidUser style={{ marginRight: "5px" }} />
 					Nome
-					<SortArrows />
-				</div>
-				<div className='date column flex center'>
+					<SortArrows order={nameOrder} setOrder={setNameOrder} />
+				</button>
+				<button
+					className='date column flex center'
+					style={{
+						backgroundColor: selectedColumn === "date" ? "#f3f3f3" : "white",
+					}}
+					onClick={() => {
+						const next = nextOrder(dateOrder);
+						setDateOrder(next);
+						setNameOrder("any");
+
+						if (next != "any") {
+							setSelectedColumn("date");
+
+							if (search.status)
+								setUsersDisplayed(sortUsers([...search.result], "any", next));
+							else
+								setUsersDisplayed(sortUsers([...usersDisplayed], "any", next));
+						} else {
+							setSelectedColumn("");
+							if (search.status) setUsersDisplayed([...search.result]);
+							else setUsersDisplayed([...usersArray]);
+						}
+					}}
+				>
 					<BiCalendar style={{ marginRight: "5px" }} />
 					Data de Registro
-					<SortArrows />
-				</div>
+					<SortArrows order={dateOrder} setOrder={setDateOrder} />
+				</button>
 			</div>
 
 			<ul>
-				{searching
-					? searchResult.map((user, i) => (
-							<UserCard key={user.id} dados={{ ...user, i }} />
-					  ))
-					: usersArray.map((user, i) => (
-							<UserCard key={user.id} dados={{ ...user, i }} />
-					  ))}
+				{usersDisplayed.map((user, i) => (
+					<UserCard key={user.id} dados={{ ...user, i }} />
+				))}
 			</ul>
 		</div>
 	);
 }
 
-function SortArrows() {
-	const [order, setOrder] = useState("ascending");
-
+function SortArrows({ order }) {
+	let arrow;
 	switch (order) {
 		case "ascending":
-			return (
-				<div
-					className='arrow flex'
-					onClick={() => {
-						setOrder(nextOrder(order));
-					}}
-				>
+			arrow = (
+				<div className='arrow flex'>
 					<IoIosArrowUp />
 				</div>
 			);
+			break;
 		case "descending":
-			return (
-				<div
-					className='arrow flex'
-					onClick={() => {
-						setOrder(nextOrder(order));
-					}}
-				>
-					<IoIosArrowDown
-						className='arrow'
-						style={{ marginLeft: "0px", marginTop: "1px" }}
-					/>
+			arrow = (
+				<div className='arrow flex'>
+					<IoIosArrowDown style={{ marginLeft: "0px", marginTop: "1px" }} />
 				</div>
 			);
+			break;
+		default:
+			arrow = (
+				<div className='arrow flex dir-column'>
+					<IoIosArrowUp style={{ marginBottom: "-6px" }} />
+					<IoIosArrowDown style={{ marginLeft: "0px" }} className='arrow' />
+				</div>
+			);
+			break;
 	}
+
+	return <div>{arrow}</div>;
 }

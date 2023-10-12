@@ -68,18 +68,30 @@
 }
 
 .arrow {
+	height: 100%;
 	margin-left: 5px;
 	color: #d40000;
 
 	font-size: 18px;
-
-	cursor: pointer;
-	transition: all 0.1s;
 }
 
-.arrow:active {
-	transform: translateY(1px);
+button.column {
+	background-color: transparent;
+	cursor: pointer;
 	transition: all 0.1s;
+	border: none;
+	border-right: 1px solid rgb(217, 217, 217);
+}
+
+button.column:hover {
+	background-color: #f3f3f3;
+}
+
+button.column:active {
+	svg:last-child {
+		transform: translateY(1px);
+		transition: all 0.1s;
+	}
 }
 
 ul {
