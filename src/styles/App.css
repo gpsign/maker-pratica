@@ -1,4 +1,6 @@
-
+*{
+	box-sizing: content-box;
+}
 html,
 body,
 div,

@@ -1,0 +1,64 @@
+.userLi {
+	height: 80px;
+}
+
+.profilePic {
+	width: 60px;
+	height: 60px;
+	border-radius: 100%;
+
+	object-fit: cover;
+
+	filter: drop-shadow(0px 0px 2px darkgray);
+}
+
+.container.check {
+	width: 50px;
+	height: 100%;
+}
+
+.container.image {
+	width: 100px;
+	height: 100%;
+}
+
+.container.name {
+	width: 456px;
+	height: 100%;
+
+	padding-left: 5px;
+}
+
+.container.date {
+	width: 180px;
+	height: 100%;
+}
+
+.name {
+	font-weight: 300;
+}
+
+.date {
+	font-weight: 300;
+}
+
+.edit {
+    user-select: none;
+	width: 90px;
+	text-align: center;
+	display: inline;
+	font-weight: 400;
+	color: rgb(80, 80, 80);
+	cursor: pointer;
+	justify-content: space-around;
+	transition: all 0.1s;
+}
+
+.edit:hover {
+	text-decoration: underline;
+}
+
+.edit:active {
+	transform: translateY(1px);
+	transition: all 0.1s;
+}
