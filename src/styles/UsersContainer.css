@@ -1,6 +1,8 @@
 .containerBox {
 	width: 880px;
-	height: fit-content;
+	height: 750px;
+
+	margin-top: -50px;
 
 	font-family: "Kanit", sans-serif;
 
@@ -34,6 +36,10 @@
 		font-weight: 300;
 		font-size: 20px;
 	}
+
+	p {
+		color: rgb(80, 80, 80);
+	}
 }
 
 .labelsColumns {
@@ -43,12 +49,7 @@
 
 .column {
 	height: 100%;
-
-	margin-left: -1px;
-
-	border-left: 1px solid rgb(217, 217, 217);
 	border-right: 1px solid rgb(217, 217, 217);
-
 	color: rgb(100, 100, 100);
 }
 
@@ -57,12 +58,12 @@
 }
 
 .column.name {
-	width: 550px;
+	width: 520px;
 	padding-left: 10px;
 }
 
 .column.date {
-	width: 170px;
+	width: 220px;
 	padding-left: 10px;
 }
 
@@ -82,8 +83,10 @@
 }
 
 ul {
+	height: 100%;
 	margin: 0;
 	list-style: none;
 	list-style-position: inside;
 	padding: 0;
+	overflow-y: scroll;
 }
