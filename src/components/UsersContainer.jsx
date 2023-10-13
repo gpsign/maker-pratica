@@ -1,6 +1,6 @@
 import "../styles/UsersContainer.css";
 import "../styles/CommonStyles.css";
-import { BiSolidUser, BiCalendar } from "react-icons/bi";
+import { BiSolidUser, BiCalendar, BiSolidTrash } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
 import { UsersListContext } from "../context/UsersList.jsx";
 import { getUsersFromServer, handleSort } from "../utils/index.js";
@@ -13,17 +13,11 @@ export function UsersContainer() {
 	const [loading, setLoading] = useState(false);
 
 	const ListData = useContext(UsersListContext);
-	const {
-		search,
-		dateOrder,
-		nameOrder,
-		usersDisplayed,
-		setUsersDisplayed,
-		setUsersArray,
-	} = ListData;
+	const { search, dateOrder, nameOrder, usersDisplayed } = ListData;
 
 	useEffect(() => {
 		async function getAndSet() {
+			const { setUsersDisplayed, setUsersArray } = ListData;
 			const users = await getUsersFromServer();
 			setUsersArray(users);
 			setUsersDisplayed(users);
@@ -35,14 +29,26 @@ export function UsersContainer() {
 
 	return (
 		<div className='containerBox'>
-			<div className='searchContainer flex space-between'>
-				<SearchInput />
-				<p>
-					{`Mostrando ${
-						search.status ? search.result.length : usersDisplayed.length
-					} usuários`}
-				</p>
+			<div className='flex'>
+				<div className='delete container flex center'>
+					<button
+						title='Selecione usuários para poder deletar'
+						className='delete flex center'
+						disabled
+					>
+						<BiSolidTrash />
+					</button>
+				</div>
+				<div className='searchContainer flex space-between'>
+					<SearchInput />
+					<p>
+						{`Mostrando ${
+							search.status ? search.result.length : usersDisplayed.length
+						} usuários`}
+					</p>
+				</div>
 			</div>
+
 			<div className='labelsColumns flex'>
 				<div className='check column flex center'>
 					<div className='checkButton' />
