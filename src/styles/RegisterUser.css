@@ -1,0 +1,90 @@
+.create {
+	padding: 10px;
+
+	position: absolute;
+	top: 50px;
+	right: -325px;
+	width: 300px;
+	height: 240px;
+
+	margin-top: -50px;
+
+	font-family: "Kanit", sans-serif;
+
+	background-color: white;
+	filter: drop-shadow(0px 5px 8px darkgray);
+	border-radius: 8px;
+}
+
+.create h2.title {
+	font-size: 24px;
+	text-align: center;
+}
+
+.create form {
+	margin-top: 5px;
+}
+
+.create label,
+.create input {
+	font-weight: 400;
+	display: block;
+}
+
+.create label {
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.create input {
+	width: 100%;
+	height: 35px;
+
+	padding: 0px 12px 0px 12px;
+	margin: 5px 0px 10px 0px;
+
+	background-color: rgb(243, 243, 243);
+
+	font-size: 18px;
+
+	border-radius: 20px;
+	border: 1px solid darkgray;
+}
+
+.create input::placeholder {
+	font-weight: 500;
+	font-size: 15px;
+}
+
+.create button {
+	height: 50px;
+	width: 150px;
+	border-radius: 50px;
+	border: none;
+	font-size: 18px;
+	font-weight: 600;
+	color: white;
+	cursor: pointer;
+
+	margin-left: 60px;
+	margin-top: 5px;
+
+	background-color: #050835;
+
+	transition: all 0.1s;
+}
+
+.create button:active {
+	transform: translateY(1px);
+}
+
+.create button svg {
+    font-size: 28px;
+    animation: spinning 0.8s infinite;
+}
+
+@keyframes spinning {
+	to {
+		transform: rotate(360deg);
+	}
+}

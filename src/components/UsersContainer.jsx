@@ -10,6 +10,7 @@ import UserCard from "./UserCard.jsx";
 import SearchInput from "./SearchInput.jsx";
 import SortArrows from "./SortArrows.jsx";
 import { deleteSelectedUsers } from "../utils/deleteSelectedUsers.js";
+import RegisterUser from "./RegisterUsers.jsx";
 
 export function UsersContainer() {
 	const [selectedColumn, setSelectedColumn] = useState("");
@@ -50,6 +51,7 @@ export function UsersContainer() {
 
 	return (
 		<div className='container box'>
+			<RegisterUser />
 			<div className='flex'>
 				<div className='delete container flex center'>
 					<button
@@ -68,6 +70,7 @@ export function UsersContainer() {
 										? `Apagar todos os ${selected.length} usuários selecionados?`
 										: `Apagar o usuário selecionado?`,
 								onConfirm: async function () {
+									setLoading(true);
 									await deleteSelectedUsers(selected);
 									await getUsersFromServer(ListData, setLoading);
 									setSelected([]);
