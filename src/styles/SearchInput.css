@@ -1,0 +1,20 @@
+input.search {
+	width: 200px;
+	height: 30px;
+
+	padding: 0px 8px 0px 8px;
+
+	background-color: rgb(243, 243, 243);
+
+	font-size: 14px;
+
+	border-radius: 20px;
+	border: 1px solid rgb(217, 217, 217);
+
+	margin-left: 10px;
+}
+
+label {
+	font-weight: 300;
+	font-size: 20px;
+}
