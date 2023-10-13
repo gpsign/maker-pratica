@@ -4,10 +4,12 @@ import { BiSolidUser, BiCalendar, BiSolidTrash } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
 import { UsersListContext } from "../context/UsersList.jsx";
+import { ModalContext } from "../context/Modal.jsx";
 import { getUsersFromServer, handleSort } from "../utils/index.js";
 import UserCard from "./UserCard.jsx";
 import SearchInput from "./SearchInput.jsx";
 import SortArrows from "./SortArrows.jsx";
+import { deleteSelectedUsers } from "../utils/deleteSelectedUsers.js";
 
 export function UsersContainer() {
 	const [selectedColumn, setSelectedColumn] = useState("");
@@ -15,6 +17,7 @@ export function UsersContainer() {
 	const [allSelected, setAllSelected] = useState(false);
 
 	const ListData = useContext(UsersListContext);
+	const { setAlert } = useContext(ModalContext);
 	const {
 		search,
 		dateOrder,
@@ -25,19 +28,10 @@ export function UsersContainer() {
 	} = ListData;
 
 	useEffect(() => {
-		async function getAndSet() {
-			const { setUsersDisplayed, setUsersArray } = ListData;
-			const users = await getUsersFromServer();
-			setUsersArray(users);
-			setUsersDisplayed(users);
-			setLoading(false);
-		}
-		setLoading(true);
-		getAndSet();
+		getUsersFromServer(ListData, setLoading);
 	}, []);
 
 	useEffect(() => {
-		console.log(selected);
 		if (search.status) {
 			let aux = true;
 
@@ -66,6 +60,20 @@ export function UsersContainer() {
 						}
 						className='delete flex center'
 						disabled={selected.length > 0 ? false : true}
+						onClick={() => {
+							setAlert({
+								show: true,
+								message:
+									selected.length > 1
+										? `Apagar todos os ${selected.length} usuários selecionados?`
+										: `Apagar o usuário selecionado?`,
+								onConfirm: async function () {
+									await deleteSelectedUsers(selected);
+									await getUsersFromServer(ListData, setLoading);
+									setSelected([]);
+								},
+							});
+						}}
 					>
 						<BiSolidTrash />
 					</button>
@@ -90,9 +98,6 @@ export function UsersContainer() {
 							if (allSelected) {
 								usersDisplayed.forEach((user) => {
 									const userIndex = after.indexOf(user.id);
-
-									console.log(userIndex);
-
 									after.splice(userIndex, 1);
 								});
 

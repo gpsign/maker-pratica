@@ -21,8 +21,10 @@ export default function SearchInput() {
 			<input
 				className='search'
 				placeholder='Nome ou Sobrenome'
+				value={search.value}
 				onChange={(e) => {
 					const value = e.target.value.trim();
+					setSearch({ ...search, value });
 					clearTimeout(searchTimeout);
 
 					searchTimeout = setTimeout(() => {

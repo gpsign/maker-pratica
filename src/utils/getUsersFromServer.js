@@ -1,10 +1,17 @@
-export async function getUsersFromServer() {
+export async function getUsersFromServer(ListData, setLoading) {
 	const API_URL = process.env.REACT_APP_API_URL;
 
-	try {
-		const response = await fetch(`${API_URL}/users`);
+	if (ListData === undefined) return;
+	const { setUsersDisplayed, setUsersArray } = ListData;
 
-		return response.json();;
+	try {
+		setLoading(true);
+		const response = await fetch(`${API_URL}/users`);
+		const users = await response.json();
+
+		setUsersArray(users);
+		setUsersDisplayed(users);
+		setLoading(false);
 	} catch (err) {
 		console.log(err);
 	}
