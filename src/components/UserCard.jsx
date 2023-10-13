@@ -1,21 +1,48 @@
 import "../styles/UserCard.css";
 import "../styles/CommonStyles.css";
+import { useContext, useEffect, useState } from "react";
+import { UsersListContext } from "../context/UsersList.jsx";
+import { BsCheck } from "react-icons/bs";
 
 export default function UserCard({ dados }) {
 	if (!dados) return;
 
-	const { nome, dh_registro, avatar, i } = dados;
+	const { id, nome, dh_registro, avatar, i } = dados;
+	const { selected, setSelected } = useContext(UsersListContext);
+	const [isChecked, setIsChecked] = useState(
+		selected.indexOf(id) != -1 ? true : false
+	);
 	const rawDate = new Date(dh_registro);
 
-	const date = rawDate.toLocaleString("pt-BR", { hour12: false }).replace(",", "");
+	const isEven = i % 2 === 0 ? "even" : "odd";
+
+	const date = rawDate
+		.toLocaleString("pt-BR", { hour12: false })
+		.replace(",", "");
+
+	useEffect(() => {
+		setIsChecked(selected.indexOf(id) != -1 ? true : false);
+	}, [selected]);
 
 	return (
-		<li
-			className='userLi flex'
-			style={{ backgroundColor: i % 2 ? "#F3F3F3" : "#FFFFFF" }}
-		>
+		<li className={`userLi flex ${isEven} ${isChecked && "selected"}`}>
 			<div className='check container flex center'>
-				<div className='checkButton' />
+				<button
+					className={`check flex center ${isChecked && "selected"}`}
+					onClick={() => {
+						const userIndex = selected.indexOf(id);
+						if (userIndex != -1) {
+							const after = selected.toSpliced(userIndex, 1);
+							setSelected(after);
+							setIsChecked(false);
+						} else {
+							setSelected([...selected, id]);
+							setIsChecked(true);
+						}
+					}}
+				>
+					{isChecked && <BsCheck />}
+				</button>
 			</div>
 			<div className='image container flex center'>
 				<img className='profilePic' src={avatar} alt={nome} />

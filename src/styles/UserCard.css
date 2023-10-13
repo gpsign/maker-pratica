@@ -1,5 +1,22 @@
 .userLi {
 	height: 80px;
+	transition: all 0.2s ease-in-out;
+}
+
+.userLi.odd {
+	background-color: #ffffff;
+}
+
+.userLi.odd.selected {
+	background-color: #ffa7a7;
+}
+
+.userLi.even {
+	background-color: #f3f3f3;
+}
+
+.userLi.even.selected {
+	background-color: #ff8d8d;
 }
 
 .profilePic {
@@ -46,7 +63,7 @@
 }
 
 .edit {
-    user-select: none;
+	user-select: none;
 	width: 90px;
 	text-align: center;
 	display: inline;

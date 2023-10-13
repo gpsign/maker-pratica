@@ -1,4 +1,4 @@
-.containerBox {
+.container.box {
 	width: 880px;
 	height: 750px;
 
@@ -57,7 +57,7 @@ button.delete:active {
 	transition: all 0.1s;
 }
 
-.searchContainer {
+.search.container {
 	width: 100%;
 	padding: 10px 20px 10px 20px;
 	border-left: 1px solid rgb(217, 217, 217);

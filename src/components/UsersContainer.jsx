@@ -1,6 +1,7 @@
 import "../styles/UsersContainer.css";
 import "../styles/CommonStyles.css";
 import { BiSolidUser, BiCalendar, BiSolidTrash } from "react-icons/bi";
+import { BsCheck } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
 import { UsersListContext } from "../context/UsersList.jsx";
 import { getUsersFromServer, handleSort } from "../utils/index.js";
@@ -11,9 +12,17 @@ import SortArrows from "./SortArrows.jsx";
 export function UsersContainer() {
 	const [selectedColumn, setSelectedColumn] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [allSelected, setAllSelected] = useState(false);
 
 	const ListData = useContext(UsersListContext);
-	const { search, dateOrder, nameOrder, usersDisplayed } = ListData;
+	const {
+		search,
+		dateOrder,
+		nameOrder,
+		usersDisplayed,
+		selected,
+		setSelected,
+	} = ListData;
 
 	useEffect(() => {
 		async function getAndSet() {
@@ -27,19 +36,41 @@ export function UsersContainer() {
 		getAndSet();
 	}, []);
 
+	useEffect(() => {
+		console.log(selected);
+		if (search.status) {
+			let aux = true;
+
+			search.result.forEach((user) => {
+				if (selected.indexOf(user.id) === -1) aux = false;
+			});
+
+			setAllSelected(aux);
+		} else
+			setAllSelected(
+				selected.length >= usersDisplayed.length && usersDisplayed.length > 0
+					? true
+					: false
+			);
+	}, [selected, usersDisplayed]);
+
 	return (
-		<div className='containerBox'>
+		<div className='container box'>
 			<div className='flex'>
 				<div className='delete container flex center'>
 					<button
-						title='Selecione usuários para poder deletar'
+						title={
+							selected.length > 0
+								? "Deletar usuários selecionados"
+								: "Selecione usuários para poder deletar"
+						}
 						className='delete flex center'
-						disabled
+						disabled={selected.length > 0 ? false : true}
 					>
 						<BiSolidTrash />
 					</button>
 				</div>
-				<div className='searchContainer flex space-between'>
+				<div className='search container flex space-between'>
 					<SearchInput />
 					<p>
 						{`Mostrando ${
@@ -51,7 +82,35 @@ export function UsersContainer() {
 
 			<div className='labelsColumns flex'>
 				<div className='check column flex center'>
-					<div className='checkButton' />
+					<button
+						className={`check flex center ${allSelected && "selected"}`}
+						onClick={() => {
+							let after = [...selected];
+
+							if (allSelected) {
+								usersDisplayed.forEach((user) => {
+									const userIndex = after.indexOf(user.id);
+
+									console.log(userIndex);
+
+									after.splice(userIndex, 1);
+								});
+
+								setSelected(after);
+							} else {
+								let idsArray = usersDisplayed.map((user) => user.id);
+
+								after = idsArray.filter((id) => {
+									if (selected.indexOf(id) != -1) return false;
+									else return true;
+								});
+
+								setSelected([...selected, ...after]);
+							}
+						}}
+					>
+						{allSelected && <BsCheck />}
+					</button>
 				</div>
 				<button
 					className='name column flex start'

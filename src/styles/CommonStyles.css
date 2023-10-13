@@ -15,11 +15,30 @@
 	justify-content: space-between;
 }
 
-.checkButton {
+button.check {
 	width: 18px;
 	height: 18px;
+
+	position: relative;
+
+	cursor: pointer;
 
 	border-radius: 4px;
 	background-color: rgb(243, 243, 243);
 	border: 1px solid rgb(217, 217, 217);
+
+	transition: all 0.2s ease-in-out;
+
+	svg {
+		top: -2px;
+		left: -2px;
+		position: absolute;
+		font-size: 22px;
+		color: white;
+	}
+}
+
+button.check.selected {
+	background-color: #9f2525;
+	border: none;
 }
