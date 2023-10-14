@@ -3,3 +3,7 @@ export * from "./searchUserInArray.js";
 export * from "./sortUsersArray.js";
 export * from "./handleSort.js";
 export * from "./getUsersFromServer.js";
+export * from "./deleteSelectedUsers.js";
+export * from "./getUserById.js";
+export * from "./handleDeletion.js";
+export * from "./postUser.js";

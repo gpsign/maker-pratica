@@ -5,7 +5,11 @@ import { BsCheck } from "react-icons/bs";
 import { useContext, useEffect, useState } from "react";
 import { UsersListContext } from "../context/UsersList.jsx";
 import { ModalContext } from "../context/Modal.jsx";
-import { getUsersFromServer, handleSort } from "../utils/index.js";
+import {
+	getUsersFromServer,
+	handleDeletion,
+	handleSort,
+} from "../utils/index.js";
 import UserCard from "./UserCard.jsx";
 import SearchInput from "./SearchInput.jsx";
 import SortArrows from "./SortArrows.jsx";
@@ -18,7 +22,7 @@ export function UsersContainer() {
 	const [allSelected, setAllSelected] = useState(false);
 
 	const ListData = useContext(UsersListContext);
-	const { setAlert } = useContext(ModalContext);
+	const { showConfirmModal } = useContext(ModalContext);
 	const {
 		search,
 		dateOrder,
@@ -65,18 +69,17 @@ export function UsersContainer() {
 						className='delete flex center'
 						disabled={selected.length > 0 ? false : true}
 						onClick={() => {
-							setAlert({
-								show: true,
-								message:
-									selected.length > 1
-										? `Apagar todos os ${selected.length} usuários selecionados?`
-										: `Apagar o usuário selecionado?`,
-								onConfirm: async function () {
-									setLoading(true);
-									await deleteSelectedUsers(selected);
-									await getUsersFromServer(ListData, setLoading);
-									setSelected([]);
-								},
+							const message =
+								selected.length > 1
+									? `Deseja mesmo apagar todos os ${selected.length} usuários selecionados?`
+									: `Deseja mesmo apagar o usuário selecionado?`;
+
+							showConfirmModal({
+								message,
+								title: "Deletar",
+								onConfirm: () => handleDeletion(ListData, setLoading),
+								Icon: BiSolidTrash,
+								IconColor: "red",
 							});
 						}}
 					>

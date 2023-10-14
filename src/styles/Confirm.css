@@ -12,76 +12,85 @@
 	font-family: "Kanit", sans-serif;
 }
 
-.alert {
-	width: fit-content;
+.confirm.modal {
+	width: 325px;
 	height: fit-content;
 
-	padding: 15px;
+	padding-top: 15px;
 
 	background-color: white;
-	border-radius: 4px;
+	border-radius: 8px;
 }
 
-.alert .title {
+.confirm.modal .icon.container {
+	width: 100%;
+	margin-bottom: 10px;
+	svg {
+		font-size: 72px;
+		padding: 10px;
+	}
+}
+
+.confirm.modal .icon.color {
+	border-radius: 100%;
+}
+
+.confirm.modal .title {
 	font-size: 38px;
-	font-weight: 500;
+	font-weight: 600;
 	text-align: center;
-    margin-bottom: 25px;
+	margin-bottom: 20px;
 }
 
-.alert .message {
-    max-width: 270px;
-	font-size: 20px;
-	font-weight: 400;
+.confirm.modal .message {
+	font-size: 24px;
+	font-weight: 300;
 	text-align: center;
+	color: rgb(40, 40, 40);
 }
 
-.alert .button.container{
-    margin-top: 25px;
-    width: 270px;
+.confirm.modal .button.container {
+	margin-top: 35px;
+	width: 100%;
 }
 
-.alert button {
-	height: 50px;
-	width: 125px;
-	border-radius: 50px;
+.confirm.modal button {
+	height: 60px;
+	width: 50%;
+
 	border: none;
 	font-size: 32px;
 	font-weight: 600;
 	color: white;
 	cursor: pointer;
 
-    transition: all 0.1s;
-}
-
-
-.alert button.confirm {
-	background-color: #080e5d;
-}
-
-.alert button.cancel {
-	background-color: #7e0000;
-}
-
-.alert button.confirm:hover {
-	background-color: #0d168e;
 	transition: all 0.1s;
 }
 
-.alert button.cancel:hover {
-	background-color: #b10000;
+.confirm.modal button.confirm {
+	background-color: #afa8a8;
+}
+
+.confirm.modal button.cancel {
+	background-color: #d4573b;
+}
+
+.confirm.modal button.confirm:hover {
+	background-color: #918b8b;
 	transition: all 0.1s;
 }
 
-.alert button.confirm:active {
-	transform: translateY(2px);
-    background-color: #080e5d;
+.confirm.modal button.cancel:hover {
+	background-color: #933d29;
 	transition: all 0.1s;
 }
 
-.alert button.cancel:active {
-    transform: translateY(2px);
-	background-color: #7e0000;
+.confirm.modal button.confirm:active {
+	transform: translateY(1px);
 	transition: all 0.1s;
 }
 
+.confirm.modal button.cancel:active {
+	transform: translateY(1px);
+	transition: all 0.1s;
+}

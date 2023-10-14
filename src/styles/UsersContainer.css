@@ -1,8 +1,8 @@
 .container.box {
 	width: 700px;
-	height: 720px;
+	height: 800px;
 
-	margin-top: -50px;
+	margin-top: 50px;
 
 	font-family: "Kanit", sans-serif;
 
@@ -113,7 +113,8 @@ button.column:active {
 }
 
 ul {
-	height: 100%;
+	height: 720px;
+	border-radius: 0px 0px 8px 8px;
 	margin: 0;
 	list-style: none;
 	list-style-position: inside;
@@ -125,7 +126,7 @@ ul {
 	background-color: rgba(0, 0, 0, 0.04);
 	border-radius: 8px;
 	width: 100%;
-	height: 640px;
+	height: 720px;
 	h4 {
 		margin-top: -80px;
 		font-size: 70px;
@@ -150,7 +151,7 @@ ul {
 	background-color: rgba(0, 0, 0, 0.04);
 	border-radius: 8px;
 	width: 100%;
-	height: 640px;
+	height: 720px;
 	h4 {
 		margin-top: -80px;
 		font-size: 70px;
