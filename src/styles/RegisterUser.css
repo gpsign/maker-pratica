@@ -80,16 +80,37 @@
 
 .create button:disabled {
 	transform: none;
-    cursor: default;
+	cursor: default;
 }
 
 .create button svg {
-    font-size: 28px;
-    animation: spinning 0.8s infinite;
+	font-size: 28px;
+	animation: spinning 0.8s infinite;
 }
 
 @keyframes spinning {
 	to {
 		transform: rotate(360deg);
+	}
+}
+
+@media (max-width: 1350px) {
+	.create {
+		width: 370px;
+		top: -220px;
+		right: 170px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.create input {
+		width: 340px;
+	}
+
+	.create button {
+		margin: 0;
+		margin-left: 90px;
 	}
 }
