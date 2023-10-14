@@ -10,12 +10,12 @@ function App() {
 	return (
 		<ModalProvider>
 			<Header />
-			<Background>
-				<UserListProvider>
+			<UserListProvider>
+				<Background>
 					<UsersContainer />
-				</UserListProvider>
-			</Background>
-			<Modals />
+				</Background>
+				<Modals />
+			</UserListProvider>
 		</ModalProvider>
 	);
 }

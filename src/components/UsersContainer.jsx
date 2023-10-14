@@ -13,16 +13,15 @@ import {
 import UserCard from "./UserCard.jsx";
 import SearchInput from "./SearchInput.jsx";
 import SortArrows from "./SortArrows.jsx";
-import { deleteSelectedUsers } from "../utils/deleteSelectedUsers.js";
 import RegisterUser from "./RegisterUsers.jsx";
 
 export function UsersContainer() {
 	const [selectedColumn, setSelectedColumn] = useState("");
-	const [loading, setLoading] = useState(true);
+
 	const [allSelected, setAllSelected] = useState(false);
 
 	const ListData = useContext(UsersListContext);
-	const { showConfirmModal } = useContext(ModalContext);
+	const { showConfirmModal, showAlertModal } = useContext(ModalContext);
 	const {
 		search,
 		dateOrder,
@@ -30,10 +29,12 @@ export function UsersContainer() {
 		usersDisplayed,
 		selected,
 		setSelected,
+		loadingList,
+		setLoadingList,
 	} = ListData;
 
 	useEffect(() => {
-		getUsersFromServer(ListData, setLoading);
+		getUsersFromServer(ListData, setLoadingList);
 	}, []);
 
 	useEffect(() => {
@@ -77,7 +78,7 @@ export function UsersContainer() {
 							showConfirmModal({
 								message,
 								title: "Deletar",
-								onConfirm: () => handleDeletion(ListData, setLoading),
+								onConfirm: () => handleDeletion(ListData),
 								Icon: BiSolidTrash,
 								IconColor: "red",
 							});
@@ -87,7 +88,7 @@ export function UsersContainer() {
 					</button>
 				</div>
 				<div className='search container flex space-between'>
-					<SearchInput setLoading={setLoading} />
+					<SearchInput setLoading={setLoadingList} />
 					<p>
 						{`Mostrando ${
 							search.status ? search.result.length : usersDisplayed.length
@@ -149,7 +150,7 @@ export function UsersContainer() {
 				</button>
 			</div>
 			<ul>
-				{loading ? (
+				{loadingList ? (
 					<div className='loading flex center'>
 						<h4>Carregando</h4>
 					</div>

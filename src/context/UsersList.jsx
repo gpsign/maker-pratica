@@ -12,6 +12,8 @@ export function UserListProvider({ children }) {
 	const [dateOrder, setDateOrder] = useState("any");
 	const [nameOrder, setNameOrder] = useState("any");
 	const [usersDisplayed, setUsersDisplayed] = useState([...usersArray]);
+	const [loadingList, setLoadingList] = useState(true);
+	const editedUsers = {};
 
 	return (
 		<UsersListContext.Provider
@@ -28,6 +30,9 @@ export function UserListProvider({ children }) {
 				setNameOrder,
 				usersDisplayed,
 				setUsersDisplayed,
+				loadingList,
+				setLoadingList,
+				editedUsers,
 			}}
 		>
 			{children}

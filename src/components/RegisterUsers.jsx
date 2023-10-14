@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { VscLoading } from "react-icons/vsc";
 import "../styles/RegisterUser.css";
-import { postUser } from "../utils/postUser.js";
 import { getUsersFromServer } from "../utils/getUsersFromServer.js";
 import { UsersListContext } from "../context/UsersList.jsx";
+import { ModalContext } from "../context/Modal.jsx";
+import { handlePost } from "../utils/handlePost.js";
 
 export default function RegisterUser() {
 	const [newUser, setNewUser] = useState({
@@ -12,6 +13,7 @@ export default function RegisterUser() {
 	});
 	const [buttonLoading, setButtonLoading] = useState(false);
 	const ListData = useContext(UsersListContext);
+	const ModalData = useContext(ModalContext);
 
 	return (
 		<div className='create'>
@@ -20,8 +22,8 @@ export default function RegisterUser() {
 				onSubmit={async (e) => {
 					e.preventDefault();
 					setButtonLoading(true);
-					await postUser(newUser, setButtonLoading);
-					await getUsersFromServer(ListData, setButtonLoading);
+					await handlePost(newUser, setButtonLoading, ListData, ModalData);
+					await getUsersFromServer(ListData);
 				}}
 			>
 				<label>

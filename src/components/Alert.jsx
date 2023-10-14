@@ -1,13 +1,13 @@
-import "../styles/Confirm.css";
+import "../styles/Alert.css";
 import "../styles/CommonStyles.css";
 import { useContext } from "react";
 import { ModalContext } from "../context/Modal.jsx";
 
-export default function Confirm() {
-	const { closeConfirmModal, ConfirmModal } = useContext(ModalContext);
+export default function Alert() {
+	const { closeAlertModal, AlertModal } = useContext(ModalContext);
 
 	let IconColor;
-	switch (ConfirmModal.IconColor) {
+	switch (AlertModal.IconColor) {
 		case "red":
 			IconColor = { color: "#ff0000", backgroundColor: "#ffc6c6" };
 			break;
@@ -20,33 +20,24 @@ export default function Confirm() {
 	}
 
 	return (
-		ConfirmModal.display && (
-			<div className='confirm modal'>
+		AlertModal.display && (
+			<div className='alert modal'>
 				<div className='icon container flex center'>
 					<div className='icon color' style={IconColor}>
-						<ConfirmModal.Icon />
+						<AlertModal.Icon />
 					</div>
 				</div>
-				<h1 className='title'>{ConfirmModal.title.toUpperCase()}</h1>
-				<p className='message'>{ConfirmModal.message}</p>
+				<h1 className='title'>{AlertModal.title.toUpperCase()}</h1>
+				<p className='message'>{AlertModal.message}</p>
 				<div className='button container flex space-between'>
 					<button
 						className='confirm'
 						onClick={() => {
-							ConfirmModal.onConfirm && ConfirmModal.onConfirm();
-							closeConfirmModal();
+							AlertModal.onConfirm && AlertModal.onConfirm();
+							closeAlertModal();
 						}}
 					>
-						SIM
-					</button>
-					<button
-						className='cancel'
-						onClick={() => {
-							ConfirmModal.onCancel && ConfirmModal.onCancel();
-							closeConfirmModal();
-						}}
-					>
-						NÃO
+						OK
 					</button>
 				</div>
 			</div>

@@ -3,12 +3,14 @@ import "../styles/CommonStyles.css";
 import { useContext, useEffect, useState } from "react";
 import { UsersListContext } from "../context/UsersList.jsx";
 import { BsCheck } from "react-icons/bs";
+import { ModalContext } from "../context/Modal.jsx";
 
 export default function UserCard({ dados }) {
 	if (!dados) return;
 
 	const { id, nome, dh_registro, avatar, i } = dados;
 	const { selected, setSelected } = useContext(UsersListContext);
+	const { showEditUserModal } = useContext(ModalContext);
 	const [isChecked, setIsChecked] = useState(
 		selected.indexOf(id) != -1 ? true : false
 	);
@@ -53,7 +55,13 @@ export default function UserCard({ dados }) {
 			<div className='date container flex center'>
 				<h3 className='date'>{date}</h3>
 			</div>
-			<button className='edit' disabled={isChecked}>
+			<button
+				className='edit'
+				onClick={() => {
+					showEditUserModal({ nome, avatar, id, dh_registro });
+				}}
+				disabled={isChecked}
+			>
 				Editar
 			</button>
 		</li>

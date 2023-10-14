@@ -1,4 +1,4 @@
-.confirm.modal {
+.alert.modal {
 	width: 325px;
 	height: fit-content;
 
@@ -8,7 +8,8 @@
 	border-radius: 8px;
 }
 
-.confirm.modal .icon.container {
+
+.alert.modal .icon.container {
 	width: 100%;
 	margin-bottom: 10px;
 	svg {
@@ -17,18 +18,18 @@
 	}
 }
 
-.confirm.modal .icon.color {
+.alert.modal .icon.color {
 	border-radius: 100%;
 }
 
-.confirm.modal .title {
+.alert.modal .title {
 	font-size: 38px;
 	font-weight: 600;
 	text-align: center;
 	margin-bottom: 20px;
 }
 
-.confirm.modal .message {
+.alert.modal .message {
 	margin: 0px 15px 0px 15px;
 	font-size: 24px;
 	font-weight: 300;
@@ -36,14 +37,14 @@
 	color: rgb(40, 40, 40);
 }
 
-.confirm.modal .button.container {
+.alert.modal .button.container {
 	margin-top: 35px;
 	width: 100%;
 }
 
-.confirm.modal button {
+.alert.modal button {
 	height: 60px;
-	width: 50%;
+	width: 100%;
 
 	border: none;
 	font-size: 32px;
@@ -54,25 +55,16 @@
 	transition: all 0.1s;
 }
 
-.confirm.modal button.confirm {
-	background-color: #afa8a8;
-}
-
-.confirm.modal button.cancel {
+.alert.modal button.confirm {
 	background-color: #d4573b;
 }
 
-.confirm.modal button.confirm:hover {
-	background-color: #918b8b;
-	transition: all 0.1s;
-}
-
-.confirm.modal button.cancel:hover {
+.alert.modal button.confirm:hover {
 	background-color: #933d29;
 	transition: all 0.1s;
 }
 
-.confirm.modal button:active {
+.alert.modal button.confirm:active {
 	transform: translateY(1px);
 	transition: all 0.1s;
 }

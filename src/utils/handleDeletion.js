@@ -1,10 +1,10 @@
 import { deleteSelectedUsers, getUsersFromServer } from "./index.js";
 
-export async function handleDeletion(ListData, setLoading) {
-	const { selected, setSelected } = ListData;
+export async function handleDeletion(ListData) {
+	const { selected, setSelected, setLoadingList } = ListData;
 
-	setLoading(true);
+	setLoadingList(true);
 	await deleteSelectedUsers(selected);
-	await getUsersFromServer(ListData, setLoading);
+	await getUsersFromServer(ListData);
 	setSelected([]);
 }
