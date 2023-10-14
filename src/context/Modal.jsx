@@ -5,31 +5,28 @@ export const ModalContext = createContext();
 
 export function ModalProvider({ children }) {
 	const DefaultConfirmModal = {
+		display: false,
 		Icon: LuAlertTriangle,
 		IconColor: "yellow",
 		title: "Alerta",
 		message: "",
 		onConfirm: undefined,
+		onCancel: undefined,
 	};
 
 	const [ConfirmModal, setConfirmModal] = useState({ ...DefaultConfirmModal });
-	const [displayModal, setDisplayModal] = useState(false);
 
 	function showConfirmModal(params) {
-		setDisplayModal(true);
-		console.log({ ...DefaultConfirmModal, ...params });
-		setConfirmModal({ ...DefaultConfirmModal, ...params });
+		setConfirmModal({ ...DefaultConfirmModal, ...params, display: true });
 	}
 
 	function closeConfirmModal() {
-		setConfirmModal({ ...DefaultConfirmModal });
-		setDisplayModal(false);
+		setConfirmModal({ ...DefaultConfirmModal, display: false });
 	}
 
 	return (
 		<ModalContext.Provider
 			value={{
-				displayModal,
 				ConfirmModal,
 				showConfirmModal,
 				closeConfirmModal,

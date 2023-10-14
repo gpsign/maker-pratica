@@ -4,8 +4,7 @@ import React, { useContext } from "react";
 import { ModalContext } from "../context/Modal.jsx";
 
 export default function Confirm() {
-	const { displayModal, closeConfirmModal, ConfirmModal } =
-		useContext(ModalContext);
+	const { closeConfirmModal, ConfirmModal } = useContext(ModalContext);
 
 	let IconColor;
 	switch (ConfirmModal.IconColor) {
@@ -21,7 +20,7 @@ export default function Confirm() {
 	}
 
 	return (
-		displayModal && (
+		ConfirmModal.display && (
 			<div className='darkscreen flex center'>
 				<div className='confirm modal'>
 					<div className='icon container flex center'>
@@ -41,7 +40,13 @@ export default function Confirm() {
 						>
 							SIM
 						</button>
-						<button className='cancel' onClick={() => closeConfirmModal()}>
+						<button
+							className='cancel'
+							onClick={() => {
+								ConfirmModal.onCancel && ConfirmModal.onCancel();
+								closeConfirmModal();
+							}}
+						>
 							NÃO
 						</button>
 					</div>
