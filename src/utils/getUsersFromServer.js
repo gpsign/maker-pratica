@@ -12,6 +12,7 @@ export async function getUsersFromServer(ListData, ModalData) {
 			showAlertModal({
 				title: "erro",
 				message: "Ocorreu algum problema na hora de listar usuários",
+				onConfirm: () => location.reload(),
 			});
 		}
 		const users = await response.json();
@@ -25,5 +26,10 @@ export async function getUsersFromServer(ListData, ModalData) {
 		setLoadingList(false);
 	} catch (err) {
 		console.log(err);
+		showAlertModal({
+			title: "erro",
+			message: "Ocorreu algum problema na hora de listar usuários",
+			onConfirm: () => location.reload(),
+		});
 	}
 }
