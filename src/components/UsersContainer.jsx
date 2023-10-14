@@ -14,7 +14,7 @@ import RegisterUser from "./RegisterUsers.jsx";
 
 export function UsersContainer() {
 	const [selectedColumn, setSelectedColumn] = useState("");
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [allSelected, setAllSelected] = useState(false);
 
 	const ListData = useContext(UsersListContext);
@@ -39,6 +39,8 @@ export function UsersContainer() {
 			search.result.forEach((user) => {
 				if (selected.indexOf(user.id) === -1) aux = false;
 			});
+
+			if (search.result.length === 0) aux = false;
 
 			setAllSelected(aux);
 		} else
@@ -82,7 +84,7 @@ export function UsersContainer() {
 					</button>
 				</div>
 				<div className='search container flex space-between'>
-					<SearchInput />
+					<SearchInput setLoading={setLoading} />
 					<p>
 						{`Mostrando ${
 							search.status ? search.result.length : usersDisplayed.length
@@ -143,16 +145,19 @@ export function UsersContainer() {
 					<SortArrows order={dateOrder} />
 				</button>
 			</div>
-
 			<ul>
 				{loading ? (
 					<div className='loading flex center'>
 						<h4>Carregando</h4>
 					</div>
-				) : (
+				) : usersDisplayed.length > 0 ? (
 					usersDisplayed.map((user, i) => (
 						<UserCard key={user.id} dados={{ ...user, i }} />
 					))
+				) : (
+					<div className='noResults flex center'>
+						<h4>Sem Resultados</h4>
+					</div>
 				)}
 			</ul>
 		</div>

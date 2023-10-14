@@ -1,11 +1,12 @@
 import "../styles/SearchInput.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { searchUserInArray, sortUsersArray } from "../utils/index.js";
 import { UsersListContext } from "../context/UsersList.jsx";
+import { getUserById } from "../utils/getUserById.js";
 
 var searchTimeout = null;
 
-export default function SearchInput() {
+export default function SearchInput({ setLoading }) {
 	const {
 		search,
 		setSearch,
@@ -14,31 +15,38 @@ export default function SearchInput() {
 		nameOrder,
 		dateOrder,
 	} = useContext(UsersListContext);
+	const [inputValue, setInputValue] = useState("");
 
 	return (
 		<label>
 			Pesquisar:{" "}
 			<input
 				className='search'
-				placeholder='Nome ou Sobrenome'
-				value={search.value}
+				placeholder='Nome, Sobrenome ou ID'
+				value={inputValue}
 				onChange={(e) => {
 					const value = e.target.value.trim();
-					setSearch({ ...search, value });
+					setInputValue(e.target.value);
 					clearTimeout(searchTimeout);
+					setLoading(true);
 
-					searchTimeout = setTimeout(() => {
+					searchTimeout = setTimeout(async () => {
 						if (value.length > 0) {
-							setSearch({ ...search, status: true });
-							const filtered = searchUserInArray(usersArray, value);
+							if (!isNaN(Number(value))) {
+								const user = await getUserById(Number(value));
+								setUsersDisplayed(user);
+							} else {
+								setSearch({ ...search, status: true });
+								const filtered = searchUserInArray(usersArray, value);
 
-							const sorted = sortUsersArray(
-								[...filtered],
-								nameOrder,
-								dateOrder
-							);
-							setUsersDisplayed([...sorted]);
-							setSearch({ status: true, result: [...sorted] });
+								const sorted = sortUsersArray(
+									[...filtered],
+									nameOrder,
+									dateOrder
+								);
+								setUsersDisplayed([...sorted]);
+								setSearch({ status: true, result: [...sorted] });
+							}
 						} else {
 							const sorted = sortUsersArray(
 								[...usersArray],
@@ -48,6 +56,7 @@ export default function SearchInput() {
 							setUsersDisplayed(sorted);
 							setSearch({ status: false, result: [] });
 						}
+						setLoading(false);
 					}, 300);
 				}}
 			/>

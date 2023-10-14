@@ -48,7 +48,7 @@ export default function RegisterUser() {
 						required
 					/>
 				</label>
-				<button className=''>
+				<button disabled={buttonLoading}>
 					{buttonLoading ? <VscLoading /> : "CADASTRAR"}
 				</button>
 			</form>

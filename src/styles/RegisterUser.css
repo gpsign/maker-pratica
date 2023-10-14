@@ -78,6 +78,11 @@
 	transform: translateY(1px);
 }
 
+.create button:disabled {
+	transform: none;
+    cursor: default;
+}
+
 .create button svg {
     font-size: 28px;
     animation: spinning 0.8s infinite;

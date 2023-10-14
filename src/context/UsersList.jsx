@@ -7,7 +7,6 @@ export function UserListProvider({ children }) {
 	const [selected, setSelected] = useState([]);
 	const [search, setSearch] = useState({
 		status: false,
-		value: "",
 		result: [],
 	});
 	const [dateOrder, setDateOrder] = useState("any");
