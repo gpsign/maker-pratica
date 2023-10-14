@@ -21,7 +21,8 @@ export function UsersContainer() {
 	const [allSelected, setAllSelected] = useState(false);
 
 	const ListData = useContext(UsersListContext);
-	const { showConfirmModal, showAlertModal } = useContext(ModalContext);
+	const ModalData = useContext(ModalContext);
+	const { showConfirmModal, showAlertModal } = ModalData;
 	const {
 		search,
 		dateOrder,
@@ -34,7 +35,7 @@ export function UsersContainer() {
 	} = ListData;
 
 	useEffect(() => {
-		getUsersFromServer(ListData, setLoadingList);
+		getUsersFromServer(ListData, ModalData);
 	}, []);
 
 	useEffect(() => {
@@ -78,7 +79,7 @@ export function UsersContainer() {
 							showConfirmModal({
 								message,
 								title: "Deletar",
-								onConfirm: () => handleDeletion(ListData),
+								onConfirm: () => handleDeletion(ListData, ModalData),
 								Icon: BiSolidTrash,
 								IconColor: "red",
 							});

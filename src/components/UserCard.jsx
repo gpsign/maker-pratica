@@ -10,7 +10,8 @@ export default function UserCard({ dados }) {
 
 	const { id, nome, dh_registro, avatar, i } = dados;
 	const { selected, setSelected } = useContext(UsersListContext);
-	const { showEditUserModal } = useContext(ModalContext);
+	const ModalData = useContext(ModalContext);
+	const { showEditUserModal } = ModalData;
 	const [isChecked, setIsChecked] = useState(
 		selected.indexOf(id) != -1 ? true : false
 	);

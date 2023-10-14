@@ -7,7 +7,8 @@ import { UsersListContext } from "../context/UsersList.jsx";
 import { VscLoading } from "react-icons/vsc";
 
 export default function EditUser() {
-	const { EditUserModal, closeEditUserModal } = useContext(ModalContext);
+	const ModalData = useContext(ModalContext);
+	const { EditUserModal, closeEditUserModal, showAlertModal } = ModalData;
 	const ListData = useContext(UsersListContext);
 
 	const BeforeChanges = {
@@ -28,10 +29,18 @@ export default function EditUser() {
 					onSubmit={async (e) => {
 						e.preventDefault();
 						setButtonLoading(true);
+						let error = false;
 						if (JSON.stringify(newValues) !== JSON.stringify(BeforeChanges))
-							await handlePut(newValues, ListData);
+							error = await handlePut(newValues, ListData, ModalData);
 						closeEditUserModal();
 						setButtonLoading(false);
+						if (error) {
+							closeEditUserModal();
+							showAlertModal({
+								title: "erro",
+								message: "Ocorreu algum problema ao editar usuário",
+							});
+						}
 					}}
 				>
 					<div className='user data flex center space-between'>

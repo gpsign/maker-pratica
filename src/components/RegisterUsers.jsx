@@ -23,7 +23,7 @@ export default function RegisterUser() {
 					e.preventDefault();
 					setButtonLoading(true);
 					await handlePost(newUser, setButtonLoading, ListData, ModalData);
-					await getUsersFromServer(ListData);
+					await getUsersFromServer(ListData, ModalData);
 				}}
 			>
 				<label>

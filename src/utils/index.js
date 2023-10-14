@@ -7,3 +7,6 @@ export * from "./deleteSelectedUsers.js";
 export * from "./getUserById.js";
 export * from "./handleDeletion.js";
 export * from "./postUser.js";
+export * from "./handlePost.js";
+export * from "./putUser.js";
+export * from "./handlePut.js";
