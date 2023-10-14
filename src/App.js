@@ -3,8 +3,8 @@ import { Background } from "./components/Background.jsx";
 import Header from "./components/Header.jsx";
 import { UsersContainer } from "./components/UsersContainer.jsx";
 import { UserListProvider } from "./context/UsersList.jsx";
-import Confirm from "./components/Confirm.jsx";
 import { ModalProvider } from "./context/Modal.jsx";
+import Modals from "./components/Modals.jsx";
 
 function App() {
 	return (
@@ -15,7 +15,7 @@ function App() {
 					<UsersContainer />
 				</UserListProvider>
 			</Background>
-			<Confirm />
+			<Modals />
 		</ModalProvider>
 	);
 }

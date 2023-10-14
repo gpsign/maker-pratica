@@ -53,7 +53,9 @@ export default function UserCard({ dados }) {
 			<div className='date container flex center'>
 				<h3 className='date'>{date}</h3>
 			</div>
-			<p className='edit'>Editar</p>
+			<button className='edit' disabled={isChecked}>
+				Editar
+			</button>
 		</li>
 	);
 }

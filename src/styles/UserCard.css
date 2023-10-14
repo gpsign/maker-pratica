@@ -62,23 +62,32 @@
 	text-align: center;
 }
 
-.edit {
-	user-select: none;
+button.edit {
 	width: 90px;
+
+	background-color: transparent;
+	border: none;
+
+	user-select: none;
 	text-align: center;
-	display: inline;
-	font-weight: 400;
+	font-weight: 500;
+	font-size: 14px;
 	color: rgb(80, 80, 80);
+
 	cursor: pointer;
-	justify-content: space-around;
 	transition: all 0.1s;
 }
 
-.edit:hover {
+button.edit:disabled {
+	color: transparent;
+	cursor: default;
+}
+
+button.edit:hover {
 	text-decoration: underline;
 }
 
-.edit:active {
+button.edit:active {
 	transform: translateY(1px);
 	transition: all 0.1s;
 }
